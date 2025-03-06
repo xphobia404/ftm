@@ -31,12 +31,12 @@ public class UsersService {
     }
 
     public UsersOutput detail(UsersInput input) throws Exception {
-        Optional<Users> usersOptional = daoUsers.findById(input.getId());
+        Optional<Users> usersOptional = daoUsers.findById(input.getUserId());
 
         Users user = usersOptional.orElseThrow(() -> new Exception("User not found"));
 
         UsersOutput output = new UsersOutput();
-        output.setId(user.getId());
+        output.setUserId(user.getUserId());
         output.setName(user.getName());
         output.setEmail(user.getEmail());
         output.setCreated_at(user.getCreated_at());
@@ -51,7 +51,7 @@ public class UsersService {
         String uuid = UUID.randomUUID().toString();
 
         Users users = new Users();
-        users.setId(uuid);
+        users.setUserId(uuid);
         users.setPassword(input.getPassword());
         users.setEmail(input.getEmail());
         users.setName(input.getName());
@@ -60,7 +60,7 @@ public class UsersService {
         daoUsers.save(users);
 
         UsersOutput output = new UsersOutput();
-        output.setId(users.getId());
+        output.setUserId(users.getUserId());
         output.setName(users.getName());
         output.setEmail(users.getEmail());
         output.setCreated_at(users.getCreated_at());
@@ -73,7 +73,7 @@ public class UsersService {
     public UsersOutput update(UsersInput input) throws Exception {
         log.debug("update [{}]", input);
 
-        Users users = daoUsers.findById(input.getId())
+        Users users = daoUsers.findById(input.getUserId())
                 .orElseThrow(() -> new Exception("User not found"));
 
         if (input.getPassword() != null && !input.getPassword().isEmpty()) {
@@ -92,7 +92,7 @@ public class UsersService {
         daoUsers.save(users);
 
         UsersOutput output = new UsersOutput();
-        output.setId(users.getId());
+        output.setUserId(users.getUserId());
         output.setName(users.getName());
         output.setEmail(users.getEmail());
         output.setUpdated_at(users.getUpdated_at());
@@ -103,13 +103,13 @@ public class UsersService {
     @Transactional
     public Map<String, Object> delete(UsersInput input) throws Exception {
 
-        Users user = daoUsers.findById(input.getId())
+        Users user = daoUsers.findById(input.getUserId())
                 .orElseThrow(() -> new Exception("User not found"));
 
-        daoUsers.deleteById(input.getId());
+        daoUsers.deleteById(input.getUserId());
 
         Map<String, Object> response = new HashMap<>();
-        response.put("id", user.getId());
+        response.put("id", user.getUserId());
         response.put("message", "User successfully deleted");
 
         return response;

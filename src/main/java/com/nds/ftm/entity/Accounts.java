@@ -12,21 +12,18 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "users")
-public class Users {
+@Table(name = "accounts")
+public class Accounts {
 
     @Id
-    @Column(name = "user_id", nullable = false)
+    @Column(name = "account_id", nullable = false)
+    private String accountId;
+
+    @Column(name = "user_id", nullable = false, length = 255)
     private String userId;
 
-    @Column(name = "email", nullable = false, length = 255)
-    private String email;
-
-    @Column(name = "name", nullable = false, length = 255)
-    private String name;
-
-    @Column(name = "password", nullable = false, length = 255)
-    private String password;
+    @Column(name = "balance", nullable = false, length = 255)
+    private Integer balance;
 
     @CreatedDate
     @Column(name = "created_at")

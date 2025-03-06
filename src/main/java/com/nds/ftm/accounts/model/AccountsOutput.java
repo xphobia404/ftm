@@ -1,4 +1,4 @@
-package com.nds.ftm.users.model;
+package com.nds.ftm.accounts.model;
 
 import java.time.LocalDateTime;
 
@@ -7,11 +7,11 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UsersOutput {
+public class AccountsOutput {
 
-    private String UserId;
-    private String name;
-    private String email;
+    private String accountId;
+    private String userId;
+    private Integer balance;
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
 
