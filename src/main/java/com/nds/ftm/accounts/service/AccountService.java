@@ -35,25 +35,25 @@ public class AccountService {
 
     public List<AccountsOutput> detail(AccountsInput input) throws Exception {
         log.debug("details [{}]", input);
-    
+
         Optional<Users> userOptional = daoUsers.findById(input.getUserId());
         Users users = userOptional.orElseThrow(() -> new Exception("User not found"));
-    
+
         List<Accounts> accounts = daoAccounts.findByUserId(input.getUserId());
-    
+
         List<AccountsOutput> outputs = new ArrayList<>();
         for (Accounts account : accounts) {
             AccountsOutput output = new AccountsOutput();
-            output.setAccountId(account.getAccountId());  
-            output.setUserId(account.getUserId());        
-            output.setBalance(account.getBalance());      
-            output.setCreated_at(account.getCreated_at()); 
+            output.setAccountId(account.getAccountId());
+            output.setUserId(account.getUserId());
+            output.setBalance(account.getBalance());
+            output.setCreated_at(account.getCreated_at());
             outputs.add(output);
         }
-    
-        return outputs; 
+
+        return outputs;
     }
-    
+
 
     @Transactional
     public AccountsOutput insert(AccountsInput input) throws Exception {

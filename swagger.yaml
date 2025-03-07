@@ -1,0 +1,204 @@
+openapi: 3.0.0
+info:
+  title: NDS API
+  description: API documentation for NDS endpoints
+  version: 1.0.0
+servers:
+  - url: http://127.0.0.1:9090
+paths:
+  /users/insert:
+    post:
+      summary: Insert a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: User created successfully
+
+  /users/list:
+    get:
+      summary: Retrieve all users
+      responses:
+        '200':
+          description: List of users
+
+  /users/detail:
+    post:
+      summary: Get user details
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+      responses:
+        '200':
+          description: User details retrieved
+
+  /users/update:
+    post:
+      summary: Update a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                name:
+                  type: string
+                email:
+                  type: string
+                created_at:
+                  type: string
+                  format: date-time
+      responses:
+        '200':
+          description: User updated successfully
+
+  /users/delete:
+    post:
+      summary: Delete a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+      responses:
+        '200':
+          description: User deleted successfully
+
+  /accounts/insert:
+    post:
+      summary: Insert a new account
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                balance:
+                  type: number
+      responses:
+        '200':
+          description: Account created successfully
+
+  /accounts/list:
+    get:
+      summary: Retrieve all accounts
+      responses:
+        '200':
+          description: List of accounts
+
+  /accounts/detail:
+    post:
+      summary: Get account details
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                accountId:
+                  type: string
+      responses:
+        '200':
+          description: Account details retrieved
+
+  /transactions/insert:
+    post:
+      summary: Insert a new transaction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                accountId:
+                  type: string
+                type:
+                  type: string
+                amount:
+                  type: number
+      responses:
+        '200':
+          description: Transaction created successfully
+
+  /transactions/list:
+    get:
+      summary: Retrieve paginated transactions
+      parameters:
+        - name: page
+          in: query
+          required: true
+          schema:
+            type: integer
+        - name: size
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: List of transactions
+
+  /transactions/detail:
+    post:
+      summary: Get transaction details
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+      responses:
+        '200':
+          description: Transaction details retrieved
+
+  /transactions/report:
+    post:
+      summary: Generate transaction report
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                startDate:
+                  type: string
+                endDate:
+                  type: string
+      responses:
+        '200':
+          description: Report generated successfully

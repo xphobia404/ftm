@@ -18,6 +18,6 @@ public interface DaoTransactions extends JpaRepository<Transactions, String> {
                    "AND t.timestamp <= TO_DATE(:endDtm, 'YYYY-MM-DD') " +
                    "ORDER BY t.timestamp DESC", nativeQuery = true)
     List<Transactions> findReport(@Param("type") String type,
-                                  @Param("startDtm") String startDtm, 
+                                  @Param("startDtm") String startDtm,
                                   @Param("endDtm") String endDtm);
 }
