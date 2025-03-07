@@ -82,4 +82,12 @@ public class AccountService {
         return output;
     }
 
+    public List<Accounts> findAmount(AccountsInput input) throws Exception {
+        log.debug("insert [{}]", input);
+
+        List<Accounts> accounts = daoAccounts.searchAmount(input.getBalance());
+
+        return accounts;
+    }
+
 }
