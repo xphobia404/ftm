@@ -1,8 +1,11 @@
 openapi: 3.0.0
 info:
   title: NDS API
-  description: API documentation for NDS endpoints
   version: 1.0.0
+  description: API for Users, Accounts, and Transactions
+  contact:
+    name: NDS API Team
+    url: http://127.0.0.1:9090
 servers:
   - url: http://127.0.0.1:9090
 paths:
@@ -18,21 +21,35 @@ paths:
               properties:
                 name:
                   type: string
+                  example: John Doe
                 email:
                   type: string
+                  example: johndoe@example.com
                 password:
                   type: string
+                  example: password123
       responses:
         '200':
-          description: User created successfully
-
+          description: User inserted successfully
   /users/list:
     get:
-      summary: Retrieve all users
+      summary: Find all users
       responses:
         '200':
-          description: List of users
-
+          description: List of all users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    userId:
+                      type: string
+                      example: 0546e323-80c0-41e3-8e43-2deceb16661f
+                    name:
+                      type: string
+                      example: John Doe
   /users/detail:
     post:
       summary: Get user details
@@ -45,13 +62,13 @@ paths:
               properties:
                 userId:
                   type: string
+                  example: 0546e323-80c0-41e3-8e43-2deceb16661f
       responses:
         '200':
-          description: User details retrieved
-
+          description: User details
   /users/update:
     post:
-      summary: Update a user
+      summary: Update user information
       requestBody:
         required: true
         content:
@@ -61,17 +78,19 @@ paths:
               properties:
                 userId:
                   type: string
+                  example: 0546e323-80c0-41e3-8e43-2deceb16661f
                 name:
                   type: string
+                  example: Ivan Tigris Sitohang
                 email:
                   type: string
+                  example: ivantigris@email.com
                 created_at:
                   type: string
-                  format: date-time
+                  example: '2025-03-06T21:48:47.1511649'
       responses:
         '200':
           description: User updated successfully
-
   /users/delete:
     post:
       summary: Delete a user
@@ -84,13 +103,13 @@ paths:
               properties:
                 userId:
                   type: string
+                  example: c9b4009c-5260-41f6-9c64-2109ca272c8b
       responses:
         '200':
           description: User deleted successfully
-
   /accounts/insert:
     post:
-      summary: Insert a new account
+      summary: Insert an account
       requestBody:
         required: true
         content:
@@ -100,19 +119,32 @@ paths:
               properties:
                 userId:
                   type: string
+                  example: 0546e323-80c0-41e3-8e43-2deceb16661f
                 balance:
                   type: number
+                  example: 100000
       responses:
         '200':
-          description: Account created successfully
-
+          description: Account inserted successfully
   /accounts/list:
     get:
-      summary: Retrieve all accounts
+      summary: Find all accounts
       responses:
         '200':
-          description: List of accounts
-
+          description: List of all accounts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    accountId:
+                      type: string
+                      example: a6d3dd51-862b-4beb-a72a-f4f063827f38
+                    balance:
+                      type: number
+                      example: 100000
   /accounts/detail:
     post:
       summary: Get account details
@@ -123,15 +155,31 @@ paths:
             schema:
               type: object
               properties:
-                accountId:
+                userId:
                   type: string
+                  example: 0546e323-80c0-41e3-8e43-2deceb16661f
       responses:
         '200':
-          description: Account details retrieved
-
+          description: Account details
+  /accounts/find:
+    post:
+      summary: Find accounts by balance
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                balance:
+                  type: number
+                  example: 500000
+      responses:
+        '200':
+          description: Accounts found with the specified balance
   /transactions/insert:
     post:
-      summary: Insert a new transaction
+      summary: Insert a transaction
       requestBody:
         required: true
         content:
@@ -141,32 +189,52 @@ paths:
               properties:
                 accountId:
                   type: string
+                  example: a6d3dd51-862b-4beb-a72a-f4f063827f38
                 type:
                   type: string
+                  enum: [DEBIT, CREDIT]
+                  example: DEBIT
                 amount:
                   type: number
+                  example: 100
       responses:
         '200':
-          description: Transaction created successfully
-
+          description: Transaction inserted successfully
   /transactions/list:
     get:
-      summary: Retrieve paginated transactions
+      summary: Pagination of transactions
       parameters:
-        - name: page
-          in: query
+        - in: query
+          name: page
           required: true
           schema:
             type: integer
-        - name: size
-          in: query
+            example: 0
+        - in: query
+          name: size
           required: true
           schema:
             type: integer
+            example: 5
       responses:
         '200':
           description: List of transactions
-
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    transactionId:
+                      type: string
+                      example: 1d3e94d1-8646-4b6f-b6e9-43112a9d87f5
+                    type:
+                      type: string
+                      example: DEBIT
+                    amount:
+                      type: number
+                      example: 100
   /transactions/detail:
     post:
       summary: Get transaction details
@@ -177,15 +245,15 @@ paths:
             schema:
               type: object
               properties:
-                userId:
+                accountId:
                   type: string
+                  example: a6d3dd51-862b-4beb-a72a-f4f063827f38
       responses:
         '200':
-          description: Transaction details retrieved
-
+          description: Transaction details
   /transactions/report:
     post:
-      summary: Generate transaction report
+      summary: Get a transaction report
       requestBody:
         required: true
         content:
@@ -195,10 +263,14 @@ paths:
               properties:
                 type:
                   type: string
+                  enum: [DEBIT, CREDIT]
+                  example: DEBIT
                 startDate:
                   type: string
+                  example: '2025-03-05'
                 endDate:
                   type: string
+                  example: '2025-03-10'
       responses:
         '200':
-          description: Report generated successfully
+          description: Transaction report
