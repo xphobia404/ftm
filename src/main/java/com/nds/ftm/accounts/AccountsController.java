@@ -31,4 +31,9 @@ public class AccountsController {
     public AccountsOutput insert(@RequestBody AccountsInput input) throws Exception{
         return accountService.insert(input);
     }
+
+    @PostMapping(value = "/find")
+    public List<AccountsOutput> findBalance(@RequestBody AccountsInput input) throws Exception{
+        return accountService.findBalance(input);
+    }
 }

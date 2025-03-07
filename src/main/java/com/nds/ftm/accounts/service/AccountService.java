@@ -82,12 +82,22 @@ public class AccountService {
         return output;
     }
 
-    public List<Accounts> findAmount(AccountsInput input) throws Exception {
+    public List<AccountsOutput> findBalance(AccountsInput input) throws Exception {
         log.debug("insert [{}]", input);
 
-        List<Accounts> accounts = daoAccounts.searchAmount(input.getBalance());
+        List<Accounts> accounts = daoAccounts.searchBalance(input.getBalance());
 
-        return accounts;
+        List<AccountsOutput> outputs = new ArrayList<>();
+        for (Accounts account : accounts) {
+            AccountsOutput output = new AccountsOutput();
+            output.setAccountId(account.getAccountId());
+            output.setUserId(account.getUserId());
+            output.setBalance(account.getBalance());
+            output.setCreated_at(account.getCreated_at());
+            outputs.add(output);
+        }
+
+        return outputs;
     }
 
 }

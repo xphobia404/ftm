@@ -12,8 +12,9 @@ public interface DaoAccounts extends JpaRepository<Accounts, Object> {
 
     List<Accounts> findByUserId(String userId);
 
-    @Query(value = "SELECT a.account_id " +
+    @Query(value = "SELECT * " +
                    "FROM accounts AS a " +
                    "WHERE a.balance > :balance ", nativeQuery = true)
-    List<Accounts> searchAmount(@Param("balance") Integer balance);
+    List<Accounts> searchBalance(@Param("balance") Integer balance);
+    
 }
