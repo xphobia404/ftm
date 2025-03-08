@@ -23,7 +23,7 @@
    ```
 2. **Import DB**:
    ```sh
-   pg_dump -U <your_username> -h localhost -d ndsdb > nds.sql
+   pg_dump -U <your_username> -h localhost -d nds > nds.sql
    ```
 3. **Jalankan aplikasi**:
    ```sh
