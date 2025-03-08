@@ -25,24 +25,24 @@ services:
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: root
     volumes:
-      - ./ftm/build/libs/ftm-0.0.1-SNAPSHOT.jar:/app/ftm.jar
+      - ./target/ftm.jar:/app/ftm.jar
     ports:
-      - "8080:8080"
+      - "9090:9090"
     command: ["java", "-jar", "/app/ftm.jar"]
     restart: always
 
-  swagger-ui:
-    image: swaggerapi/swagger-ui
-    container_name: swagger-ui
-    volumes:
-      - ./ftm/swagger.yaml:/usr/share/nginx/html/swagger.yaml
-    environment:
-      SWAGGER_JSON: /usr/share/nginx/html/swagger.yaml
-    ports:
-      - "8081:8080"
-    depends_on:
-      - app
-    restart: always
+  # swagger-ui:
+  #   image: swaggerapi/swagger-ui
+  #   container_name: swagger-ui
+  #   ports:
+  #     - "8080:8080"
+  #   environment:
+  #     - SWAGGER_JSON=/usr/share/nginx/html/swagger.yaml
+  #   volumes:
+  #     - ./swagger.yaml:/usr/share/nginx/html/swagger.yaml
+  #   depends_on:
+  #     - app
+  #   restart: always
 
 volumes:
   db_data:
