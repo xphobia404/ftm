@@ -11,7 +11,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ./target/ndsdb.dmp:/docker-entrypoint-initdb.d/ndsdb.sq
+      - ./target/nds.sql:/docker-entrypoint-initdb.d/ndsdb.sq
     restart: always
 
   app:

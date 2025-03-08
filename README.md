@@ -5,45 +5,32 @@
 ### Persyaratan:
 - Java 17 atau yang lebih baru
 - Maven 3.8+
+- postgreSQL 16
 - Postman untuk uji API
 
 ### Langkah-Langkah:
 1. **Clone repository** (jika belum ada):
    ```sh
    git clone https://github.com/xphobia404/ftm
-   cd your-repo
+   cd ftm/target
    ```
-2. **Build aplikasi** menggunakan Maven:
+
+## 2. Import DB
+
+1. **Create DB**
    ```sh
-   mvn clean package
+   createdb -U postgres -h localhost nds
+   ```
+2. **Import DB**:
+   ```sh
+   pg_dump -U postgres -h localhost -d ndsdb > nds.dmp
    ```
 3. **Jalankan aplikasi**:
    ```sh
-   java -jar target/ftm.jar
+   java -jar ftm.jar
    ```
 
 Aplikasi akan berjalan di `http://localhost:9090`.
-
-## 2. Menjalankan Aplikasi dengan Docker Compose
-
-### Persyaratan:
-- Docker
-- Docker Compose
-
-### Langkah-Langkah:
-1. **Build image Docker**:
-   ```sh
-   docker build -t your-app .
-   ```
-2. **Jalankan aplikasi menggunakan `docker-compose.yml`**:
-   ```sh
-   docker-compose up -d
-   ```
-3. **Pastikan container berjalan**:
-   ```sh
-   docker ps
-   ```
-   Aplikasi akan berjalan di `http://localhost:9090`.
 
 ## 3. Mengakses API dengan Postman
 
@@ -74,8 +61,4 @@ Import file `NDS.postman_collection.json` ke aplikasi Postman, lalu gunakan sesu
 - Jika dijalankan secara manual:
   ```sh
   CTRL + C
-  ```
-- Jika menggunakan Docker Compose:
-  ```sh
-  docker-compose down
   ```
