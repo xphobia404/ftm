@@ -19,11 +19,11 @@
 
 1. **Create DB**
    ```sh
-   createdb -U postgres -h localhost nds
+   createdb -U <your_username> -h localhost nds
    ```
 2. **Import DB**:
    ```sh
-   pg_dump -U postgres -h localhost -d ndsdb > nds.dmp
+   pg_dump -U <your_username> -h localhost -d ndsdb > nds.sql
    ```
 3. **Jalankan aplikasi**:
    ```sh
